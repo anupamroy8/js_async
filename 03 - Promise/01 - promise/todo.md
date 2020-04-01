@@ -10,7 +10,15 @@ Create a promise. Have it resolve with a value of 'Resolved!' in resolve after a
 ### Challenge 3
 Create another promise. Now have it reject with a value of "Rejected!" without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch`
 
-### Challenge 4
+### Challenge 4var promise = new Promise(function (resolve, reject) {
+  setTimeout(()=> resolve("Resolved"), 1000)
+});
+
+promise.then (
+  result => console.log(result),
+  error => console.log(error)
+)
+
 Promises are asynchronous and we're now going to prove that they indeed are! Create a promise and have it resolve with the value of "Promise has been resolved!" Then uncomment the code at bottom of `Challenge 4`. What order do we expect "Promise has been resolved!" and "I'm not the promise!" to print? Why?
 
 ### Challenge 5

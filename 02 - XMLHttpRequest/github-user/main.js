@@ -1,7 +1,3 @@
-let input = document.querySelector("input");
-let form = document.querySelector("form");
-let output = document.querySelector(".output");
-
 function search(event) {
   event.preventDefault();
 
@@ -12,11 +8,6 @@ function search(event) {
   xhr.onload = function() {
     if (this.status == 200) {
     var data = JSON.parse(xhr.response);
-    console.log(data, "data");
-    console.log(data.login, "your username");
-    console.log(data.id, "your id");
-    console.log(data.bio, "your bio");
-    console.log(data.avatar_url);
     outputUi(data);
     } else {
     console.log("user not found");
@@ -25,6 +16,14 @@ function search(event) {
   };
   xhr.send();
 }
+let input = document.querySelector("input");
+let form = document.querySelector("form");
+
+form.addEventListener("submit", search);
+
+let output = document.querySelector(".output");
+
+
 function outputUi(data) {
   output.innerHTML = "";
   let box = document.createElement("div");
@@ -56,5 +55,3 @@ function errorPage() {
   found.innerText = "User was not found! :(";
   output.append(found);
 }
-
-form.addEventListener("submit", search);

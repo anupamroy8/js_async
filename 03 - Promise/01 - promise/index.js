@@ -1,58 +1,71 @@
 // Challenge 1
 
 function sayHello() {
-
+  setTimeout( () => {
+    console.log('hello')
+  }, 1000)
 }
-
-// Uncomment the line below when ready
-// sayHello(); // should log "Hello" after 1000ms
+sayHello(); // should log "Hello" after 1000ms
 
 
 // Challenge 2
 var promise = new Promise(function (resolve, reject) {
-  // ADD CODE HERE
+  setTimeout(()=> resolve("Resolved"), 1000)
 });
 
-// Should print out "Resolved!"
-// ADD CODE HERE
+promise.then (
+  result => console.log(result),
+  error => console.log(error)
+)
 
+// Should print out "Resolved!"
 
 // Challenge 3
 
-promise = new Promise(function(resolve, reject) {
-  // ADD CODE HERE
-})
+var promise = new Promise(function(resolve, reject) {
+  reject("Rejected")
+});
 
+promise.catch (
+  result => console.log(result),
+  error => console.log(error)
+)
 // Should print out "Reject!"
 // ADD CODE HERE
 
 
 // Challenge 4
 
-promise = new Promise(function (resolve, reject) {
-  // ADD CODE HERE
+var promise = new Promise(function (resolve, reject) {
+  setTimeout(()=> resolve("Resolved"), 1000)
 });
 
-// Uncomment the lines below when ready
-// promise.then(() => console.log('Promise has been resolved!));
-// console.log("I'm not the promise!");
+promise.then(
+  () => console.log('Promise has been resolved!'));
+console.log("I'm not the promise!");
 
+//"I'm not the promise!"" is printed first.
+//Because the "call stack" will be executed first by "Event loop" before it reaches "message queue"(where 'Promise has been resolved!' is received from promise)
 
 // Challenge 5
 function delay(){
-
+  var promise = new Promise(function(resolve, reject) {
+    setTimeout(() => resolve(), 1000);
+  })
+  return promise;
 }
+function sayHello() {
+  console.log("Hello");
+}
+delay().then(sayHello);
 
-// Uncomment the code below to test
 // This code should log "Hello" after 1000ms
-// delay().then(sayHello);
-
 
 // Challenge 6
-//
-// ADD CODE BELOW
-// var secondPromise =
-// var firstPromise =
+
+var secondPromise = new Promise((resolve, reject) => resolve("second!"));
+var firstPromise = new Promise((resolve, reject) => resolve(secondPromise));
+firstPromise.then(result => console.log(result))
 
 
 // Challenge 7
@@ -74,5 +87,16 @@ const fakeAPICall = (i) => {
 };
 
 function getAllData() {
-  // CODE GOES HERE
+  var promise1 = new Promise((resolve, reject) => {
+    resolve(fakeAPICall(0));
+  });
+  var promise2 = new Promise((resolve, reject) => {
+    resolve(fakeAPICall(1));
+  });
+  var promise3 = new Promise((resolve, reject) => {
+    resolve(fakeAPICall(2));
+  });
+
+  Promise.all([promise1, promise2, promise3]).then(value => console.log(value));
 }
+getAllData();
